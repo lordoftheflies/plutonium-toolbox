@@ -1,0 +1,59 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer-element.html">
+<script>
+    (function () {
+        'use strict';
+        // Create my namespace, if it doesn't exist
+        if (!window.Plutonium) {
+            window.Plutonium = {};
+        }
+
+        Plutonium.WidgetMixin = Polymer.dedupingMixin((base) => class extends base {
+            static get properties() {
+                return {
+                    backendUrl: String,
+                    django: {
+                        type: Boolean,
+                        notify: true,
+                        reflectToAttribute: true,
+                        value: () => false
+                }
+            }
+            }
+            constructor() {
+                super();
+                console.debug(this.fqen, 'is created');
+            }
+            ready() {
+                super.ready();
+                console.debug(this.fqen, 'is ready');
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                console.debug(this.fqen, 'is attached');
+            }
+            disconnectedCallback() {
+                console.debug(this.fqen, 'is detached');
+                super.disconnectedCallback();
+            }
+            get fqen() {
+                return (this.id) ? (this.localName + '#' + this.id) : this.localName;
+            }
+            capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            monoGram(string) {
+                return string.charAt(0).toUpperCase();
+            }
+        });
+    })();
+</script>
