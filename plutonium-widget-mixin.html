@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="plutonium-panel-mixin.html">
 <script>
     (function () {
         'use strict';
@@ -17,42 +18,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             window.Plutonium = {};
         }
 
-        Plutonium.WidgetMixin = Polymer.dedupingMixin((base) => class extends base {
+        Plutonium.WidgetMixin = Polymer.dedupingMixin((base) => class extends window.Plutonium.PanelMixin(base) {
             static get properties() {
                 return {
                     backendUrl: String,
-                    django: {
+                    static: {
                         type: Boolean,
                         notify: true,
                         reflectToAttribute: true,
                         value: () => false
-                }
-            }
-            }
-            constructor() {
-                super();
-                console.debug(this.fqen, 'is created');
-            }
-            ready() {
-                super.ready();
-                console.debug(this.fqen, 'is ready');
-            }
-            connectedCallback() {
-                super.connectedCallback();
-                console.debug(this.fqen, 'is attached');
-            }
-            disconnectedCallback() {
-                console.debug(this.fqen, 'is detached');
-                super.disconnectedCallback();
-            }
-            get fqen() {
-                return (this.id) ? (this.localName + '#' + this.id) : this.localName;
-            }
-            capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-            monoGram(string) {
-                return string.charAt(0).toUpperCase();
+                    }
+                };
             }
         });
     })();
